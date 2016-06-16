@@ -163,3 +163,31 @@
 .tab-content.disabled {
     display: none;
 }
+
+.lvh-add {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    background: #fff;
+    -webkit-animation-name: 'fadeIn';
+    animation-name: 'fadeIn';
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.lvh-add:before {
+    content: "\f278";
+    font-family: 'Material-Design-Iconic-Font';
+    position: absolute;
+    left: 24px;
+    top: 17px;
+    font-size: 22px;
+}
+
+.disabled {
+    display: none;
+}

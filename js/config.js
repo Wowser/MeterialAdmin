@@ -176,7 +176,6 @@ materialAdmin
                             {
                                 name: 'vendors',
                                 files: [
-                                    'vendors/input-mask/input-mask.min.js',
                                     'vendors/bower_components/nouislider/jquery.nouislider.min.js',
                                     'vendors/bower_components/moment/min/moment.min.js',
                                     'vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
@@ -194,7 +193,28 @@ materialAdmin
         
             .state ('form.form-examples', {
                 url: '/form-examples',
-                templateUrl: 'views/form-examples.html'
+                templateUrl: 'views/form-examples.html',
+                resolve: {
+                    loadPlugin: function($ocLazyLoad) {
+                        return $ocLazyLoad.load ([
+                            {
+                                name: 'css',
+                                insertBefore: '#app-level',
+                                files: [
+
+                                    'vendors/bower_components/chosen/chosen.min.css'
+                                ]
+                            },
+                            {
+                                name: 'vendors',
+                                files: [
+                                    'vendors/bower_components/chosen/chosen.jquery.js',
+                                    'vendors/bower_components/angular-chosen-localytics/chosen.js'
+                                ]
+                            }
+                        ])
+                    }
+                }
             })
         
             .state ('form.form-validations', {

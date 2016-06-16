@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-ng-controller="productAddCtrl">
     <div class="block-header">
         <h2>新增产品</h2>
 
@@ -44,13 +44,14 @@
             <form role="form">
                 <div class="form-group fg-line">
                     <label for="productName">产品名称</label>
-                    <input type="email" class="form-control input-sm" id="productName" placeholder="输入产品名称">
+                    <input type="email" class="form-control input-sm" id="productName" data-ng-model="product.name"
+                           placeholder="输入产品名称">
                 </div>
                 <div class="form-group">
                     <label for="productDesc">产品描述</label>
                     <div class="fg-line">
                         <textarea class="form-control" rows="5" id="productDesc"
-                                  placeholder="产品描述...."></textarea>
+                                  placeholder="产品描述...." data-ng-model="product.desc"></textarea>
                     </div>
                 </div>
             </form>
@@ -59,7 +60,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h2>类别信息
+            <h2>类别
                 <small>
                 </small>
             </h2>
@@ -81,8 +82,11 @@
                                 <input type="email" class="form-control input-sm" id="productName" placeholder="输入车型">
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
-                            <select chosen data-placeholder="Select a country..." class="w-100">
+                            <label for="supplier_select">供应商</label>
+                            <select chosen data-placeholder="Select a country..." class="w-100" id="supplier_select">
                                 <option value="United States">United States</option>
                                 <option value="United Kingdom">United Kingdom</option>
                                 <option value="Afghanistan">Afghanistan</option>
@@ -102,118 +106,86 @@
     </div>
 
     <div class="card">
-
-        <form class="form-horizontal" role="form">
-            <div class="card-header">
-                <h2>Horizontal Form
-                    <small>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a
-                        horizontal layout by adding '.form-horizontal' to the form. Doing so changes '.form-groups' to
-                        behave as grid rows, so no need for '.row'.
-                    </small>
-                </h2>
-            </div>
-
-            <div class="card-body card-padding">
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
-                        <div class="fg-line">
-                            <input type="email" class="form-control input-sm" id="inputEmail3" placeholder="Email">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
-
-                        <div class="fg-line">
-                            <input type="password" class="form-control input-sm" id="inputPassword3"
-                                   placeholder="Password">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" value="">
-                                <i class="input-helper"></i>
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-sm">Sign in</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="card">
         <div class="card-header">
-            <h2>Multi Column
-                <small>Wrap inputs in grid columns, or any custom parent element, to easily enforce desired widths.
-                </small>
+            <h2>SKU
+                <small></small>
             </h2>
         </div>
+        <div class="listview lv-bordered lv-lg">
+            <div class="lv-header-alt clearfix">
+                <h2 class="lvh-label hidden-xs">新增SKU</h2>
 
-        <div class="card-body card-padding">
-            <div class="row">
-                <div class="col-xs-3">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-3">
+                <div class="lvh-add" data-ng-class="{disabled: !mactrl.listviewSearchStat}">
+                    <input type="text" placeholder="SKU名称" class="lvhs-input" data-ng-model="skuNameInput"
+                           data-ng-init="skuNameInput=''">
+                    <i class="lvh-search-close" style="right: 52px;"
+                       data-ng-click="mactrl.listviewSearchStat = false;addSku()">&plus;</i>
+                    <i class="lvh-search-close"
+                       data-ng-click="mactrl.listviewSearchStat = false;skuNameInput=''">&times;</i>
+                </div>
+
+                <ul class="lv-actions actions">
+                    <li>
+                        <a href="" data-ng-click="mactrl.listviewSearchStat = true">
+                            <i class="zmdi zmdi-plus"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" uib-dropdown>
+                        <a href="" uib-dropdown-toggle aria-expanded="true">
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Refresh</a>
+                            </li>
+                            <li>
+                                <a href="">Listview Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="lv-body" ng-repeat="sku in product.skus">
+                <div class="lv-item media">
+                    <div class="checkbox pull-left">
+                        <label>
+                            <input type="checkbox" value="">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                    <div class="media-body">
+                        <div class="lv-title">{{sku.name}}
+                        </div>
+                        <div class="row" ng-class="{disabled: !editMode}">
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" ng-model="sku.newValue" placeholder="Input Small">
+                                <a href="" data-ng-click="sku.add()">add</a>
+                            </div>
+                        </div>
+                        <ul class="lv-attrs">
+                            <li ng-repeat="value in sku.values">{{value}}</li>
+                        </ul>
+
+                        <div class="lv-actions actions dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="" data-ng-click="editMode = true;">Edit</a>
+                                </li>
+                                <li>
+                                    <a href="">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-3">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-3">
-                    </div>
-                </div>
-                <div class="col-xs-3">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-3">
-                    </div>
-                </div>
-                <div class="col-xs-3">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-3">
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-4">
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-4">
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-4">
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-6">
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-6">
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <div class="fg-line form-group">
-                        <input type="text" class="form-control input-sm" placeholder=".col-xs-12">
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-
 </div>

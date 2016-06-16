@@ -11,14 +11,15 @@ materialAdmin
             $scope.product.skus.push({
                 name: name,
                 values: [],
-                add: function() {
-                    this.values.push(this.newValue);
+                add: function () {
+                    if (this.values.indexOf(this.newValue) < 0) {
+                        this.values.push(this.newValue);
+                    }
+                },
+                delete: function() {
+                    $scope.product.skus.splice($scope.product.skus.indexOf(this), 1);
                 }
             });
             $scope.skuNameInput = '';
-        }
-
-        $scope.add = function(event) {
-            console.log(angular.element(event.target).siblings("input").val());
         }
     });

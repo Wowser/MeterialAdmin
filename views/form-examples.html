@@ -160,8 +160,10 @@
                         </div>
                         <div class="row" ng-class="{disabled: !editMode}">
                             <div class="col-sm-3">
-                                <input type="text" class="form-control input-sm" ng-model="sku.newValue" placeholder="Input Small">
-                                <a href="" data-ng-click="sku.add()">add</a>
+                                <input type="text" class="form-control input-small m-t-5" ng-model="sku.newValue" placeholder="Sku取值">
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-primary btn-sm waves-effect m-t-10" data-ng-click="sku.add()">add</button>
                             </div>
                         </div>
                         <ul class="lv-attrs">
@@ -178,7 +180,7 @@
                                     <a href="" data-ng-click="editMode = true;">Edit</a>
                                 </li>
                                 <li>
-                                    <a href="">Delete</a>
+                                    <a href="" data-ng-click="sku.delete()">Delete</a>
                                 </li>
                             </ul>
                         </div>

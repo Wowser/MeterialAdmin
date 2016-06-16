@@ -191,3 +191,7 @@
 .disabled {
     display: none;
 }
+
+.listview.lv-lg .lv-item:hover {
+    background-color: inherit;
+}

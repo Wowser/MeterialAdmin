@@ -34,13 +34,13 @@
 }
 
 .modal-preview-demo .modal {
-    position: relative; 
-    display: block; 
-    z-index: 0; 
-    background: rgba(0,0,0,0.1);
+    position: relative;
+    display: block;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.1);
 }
 
-.margin-bottom > *{
+.margin-bottom > * {
     margin-bottom: 20px;
 }
 
@@ -54,7 +54,7 @@
 
 .color-block {
     height: 100px;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
     text-align: center;
     padding: 15px 0;
     border-radius: 2px;
@@ -124,8 +124,6 @@
     margin: 0 5px 10px 0;
 }
 
-
-
 .icons-demo .card-body .zmdi, .card-body .socicon {
     font-size: 23px;
     vertical-align: middle;
@@ -179,6 +177,7 @@
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+
 .lvh-add:before {
     content: "\f278";
     font-family: 'Material-Design-Iconic-Font';
@@ -194,4 +193,26 @@
 
 .listview.lv-lg .lv-item:hover {
     background-color: inherit;
+}
+
+.lv-attrs .close {
+    position: relative;
+    top: 2px;
+    right: -5px;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    color: #BBB;
+    opacity: 0.8;
+    font-weight: normal;
+    text-shadow: none;
+    float: right;
+    font-size: 15px;
+}
+
+.lv-attrs .close:hover {
+    opacity: 1;
+    color: #666;
 }

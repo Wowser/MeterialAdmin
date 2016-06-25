@@ -1,5 +1,14 @@
-<div class="container" data-ng-controller="productAddCtrl" data-ng-init="stepIndex = 1; maxStep = 3;">
-
+<div class="container" data-ng-controller="productAddCtrl"
+     data-ng-init="stepIndex = 1; maxStep = 2; preLoaderShow = true;">
+    <div class="z-depth-2"
+         style="background-color: #fff; padding: 5px;border-radius: 50%; position: fixed; left: 50%; z-index: 999;"
+         data-ng-class="{disabled: !preLoaderShow}">
+        <div class="preloader pls-red">
+            <svg class="pl-circular" viewBox="25 25 50 50">
+                <circle class="plc-path" cx="50" cy="50" r="20"></circle>
+            </svg>
+        </div>
+    </div>
     <div class="block-header">
         <h2>新增产品</h2>
 
@@ -79,8 +88,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group fg-line">
-                                    <label for="productName">车型</label>
-                                    <input type="email" class="form-control input-sm" id="productName"
+                                    <label for="carType">车型</label>
+                                    <input type="email" class="form-control input-sm" id="carType"
                                            placeholder="输入车型">
                                 </div>
                             </div>
@@ -153,12 +162,6 @@
 
                 <div class="lv-body" ng-repeat="sku in product.skus">
                     <div class="lv-item media">
-                        <div class="checkbox pull-left">
-                            <label>
-                                <input type="checkbox" value="">
-                                <i class="input-helper"></i>
-                            </label>
-                        </div>
                         <div class="media-body">
                             <div class="lv-title">{{sku.name}}
                             </div>
@@ -176,7 +179,8 @@
                             </div>
                             <ul class="lv-attrs">
                                 <li ng-repeat="value in sku.values">{{value}}
-                                    <button type="button" class="close" ng-click="sku.deleteAttr($index)">
+                                    <button type="button" class="close" ng-click="sku.deleteAttr($index)"
+                                            data-ng-class="{disabled: !editMode}">
                                         <span aria-hidden="true">×</span>
                                         <span class="sr-only">Close</span>
                                     </button>
@@ -206,16 +210,209 @@
                 </div>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>定价SKU</h2>
+            </div>
+            <div class="card-body card-padding">
+                <label class="checkbox checkbox-inline m-r-20" data-ng-repeat="sku in product.skus">
+                    <input type="checkbox" value="sku.name" ng-model="sku.determinPrice">
+                    <i class="input-helper"></i>
+                    {{sku.name}}
+                </label>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>定价方式</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="m-b-10" ng-init="priceType='fixedUnitPrice'">
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="fixedUnitPriceRadioOptions" ng-model="priceType"
+                               value="fixedUnitPrice">
+                        <i class="input-helper"></i>
+                        固定单价
+                    </label>
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="fixedTotalPriceRadioOptions" ng-model="priceType"
+                               value="fixedTotalPrice">
+                        <i class="input-helper"></i>
+                        固定总价
+                    </label>
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="stepUnitPriceRadioOptions" ng-model="priceType" value="stepUnitPrice">
+                        <i class="input-helper"></i>
+                        阶梯单价
+                    </label>
+                    <label class="radio radio-inline m-r-20">
+                        <input type="radio" name="mixedStepPriceRadioOptions" ng-model="priceType"
+                               value="mixedStepPrice">
+                        <i class="input-helper"></i>
+                        混合阶梯定价
+                    </label>
+                </div>
+                <!--<div class="tab-content"-->
+                     <!--data-ng-class="{disabled: priceType !== 'stepUnitPrice' &&  priceType !== 'mixedStepPrice'}">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-4">-->
+                            <!--<div class="form-group fg-line">-->
+                                <!--<label for="stepLength">阶梯数量</label>-->
+                                <!--<input type="number" class="form-control input-sm" id="stepLength" ng-model="stepLength"-->
+                                       <!--placeholder="1">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="row" data-ng-repeat="stepScope in stepScopes">-->
+                        <!--<div class="col-sm-12">-->
+                            <!--<p>阶梯{{$index + 1}} </p>-->
+                        <!--</div>-->
+                        <!--<div class="col-sm-4">-->
+                            <!--<div class="form-group fg-line">-->
+                                <!--<label>起始</label>-->
+                                <!--<input type="number" class="form-control input-sm" ng-model="stepScope.start"-->
+                                       <!--placeholder="1">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-sm-4">-->
+                            <!--<div class="form-group fg-line">-->
+                                <!--<label>结束</label>-->
+                                <!--<input type="number" class="form-control input-sm" ng-model="stepScope.end"-->
+                                       <!--placeholder="1">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div class="listview lv-bordered lv-lg" data-ng-class="{disabled: priceType !== 'stepUnitPrice' &&  priceType !== 'mixedStepPrice'}">
+                <div class="lv-header-alt clearfix">
+                    <h2 class="lvh-label hidden-xs">新增阶梯</h2>
+
+                    <ul class="lv-actions actions">
+                        <li>
+                            <a href="" data-ng-click="addStepScope();">
+                                <i class="zmdi zmdi-plus"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Refresh</a>
+                                </li>
+                                <li>
+                                    <a href="">Listview Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lv-body" ng-repeat="stepScope in stepScopes">
+                    <div class="lv-item media">
+                        <div class="media-body">
+                            <div class="lv-title">阶梯{{$index + 1}}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="number" min="0" class="form-control input-small m-t-5" ng-model="stepScope.start">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="number" min="0" class="form-control input-small m-t-5" ng-model="stepScope.end">
+                                </div>
+                            </div>
+
+                            <div class="lv-actions actions dropdown" uib-dropdown>
+                                <a href="" uib-dropdown-toggle aria-expanded="true">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a href="" data-ng-click="deleteStepScope($index)">Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <div data-ng-show="stepIndex === 2">
-        page2
+        <div class="card">
+            <div class="card-header">
+                <h2>定价
+                    <small></small>
+                </h2>
+            </div>
+            <div class="listview lv-bordered lv-lg">
+                <div class="lv-header-alt clearfix">
+                    <h2 class="lvh-label hidden-xs">定价表</h2>
+                    <ul class="lv-actions actions">
+                        <li class="dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Refresh</a>
+                                </li>
+                                <li>
+                                    <a href="">Listview Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lv-body" ng-repeat="combination in skuCombination">
+                    <div class="lv-item media">
+                        <div class="media-body">
+                            <div class="lv-title">{{combination}}
+                            </div>
+
+                            <div class="lv-actions actions dropdown" uib-dropdown>
+                                <a href="" uib-dropdown-toggle aria-expanded="true">
+                                    <i class="zmdi zmdi-more-vert"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li data-ng-show="!editMode">
+                                        <a href="" data-ng-click="editMode = true;">Edit</a>
+                                    </li>
+                                    <li data-ng-show="editMode">
+                                        <a href="" data-ng-click="editMode = false;">Save</a>
+                                    </li>
+                                    <li>
+                                        <a href="" data-ng-click="sku.delete()">Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <div data-ng-show="stepIndex === 3">
         page3
     </div>
 
     <button class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ng-click="nextStep(stepIndex)"
-            data-ng-show="stepIndex < maxStep">下一步
+            data-ng-show="stepIndex < maxStep">生成定价表格
+    </button>
+    <button class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ng-click="preStep(stepIndex)"
+            data-ng-show="stepIndex === maxStep">提交
     </button>
     <button class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ng-click="preStep(stepIndex)"
             data-ng-show="stepIndex > 1">上一步

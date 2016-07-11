@@ -1,0 +1,180 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-equalizer m-r-5"></i> Description</h2>
+
+        <ul class="actions" data-ng-if="ctrl.editDescription === 0">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="ctrl.editDescription = 1;" href="">Edit</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="ctrl.editDescription === 0">
+            {{ product.desc }}
+        </div>
+
+        <form data-ng-submit="" class="pmbb-edit" data-ng-if="ctrl.editDescription === 1">
+            <div class="fg-line">
+                <textarea data-ng-model="product.desc" class="form-control" rows="5" placeholder="Description..."></textarea>
+            </div>
+            <div class="m-t-10">
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="ctrl.editDescription = 0;">Save</button>
+                <button class="btn btn-link btn-sm" data-ng-click="ctrl.editDescription = 0" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-person m-r-5"></i> Basic Information</h2>
+
+        <ul class="actions" data-ng-if="ctrl.editBasicInfo === 0">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="ctrl.editBasicInfo = 1" href="">Edit</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="ctrl.editBasicInfo === 0">
+            <dl class="dl-horizontal">
+                <dt>产品名称</dt>
+                <dd>{{ product.name }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>产品类型</dt>
+                <dd>{{ product.type }}</dd>
+            </dl>
+            <dl class="dl-horizontal" data-ng-repeat="item in product.specifics">
+                <dt>{{item.itemName}}</dt>
+                <dd>{{ item.value }}</dd>
+            </dl>
+        </div>
+
+        <form data-ng-submit="" class="pmbb-edit" data-ng-if="ctrl.editBasicInfo === 1">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">产品名称</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="product.name" type="text" class="form-control" value="{{ product.name }}" placeholder="产品名称">
+                    </div>
+
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>产品类型</dt>
+                <dd>{{ product.type }}</dd>
+            </dl>
+            <dl class="dl-horizontal" data-ng-repeat="item in product.specifics">
+                <dt data-ng-class="{'p-t-10': item.editable}">{{item.itemName}}</dt>
+                <dd data-ng-if="item.editable">
+                    <div class="fg-line">
+                        <input data-ng-model="item.value" type="text" class="form-control" value="{{ item.value }}" placeholder="产品名称">
+                    </div>
+                </dd>
+                <dd data-ng-if="!item.editable">{{ item.value }}</dd>
+            </dl>
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit" data-ng-click="ctrl.editBasicInfo = 0">Save</button>
+                <button class="btn btn-link btn-sm" data-ng-click="ctrl.editBasicInfo = 0" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-phone m-r-5"></i> 产品SKU</h2>
+
+        <ul class="actions" data-ng-if="ctrl.editSkus === 0">
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ng-click="ctrl.editSkus = 1" href="">Edit</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" data-ng-if="ctrl.editSkus === 0">
+            <dl class="dl-horizontal">
+                <dt>Mobile Phone</dt>
+                <dd>{{ pctrl.mobileNumber }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Email Address</dt>
+                <dd>{{ pctrl.emailAddress }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Twitter</dt>
+                <dd>{{ pctrl.twitter }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Skype</dt>
+                <dd>{{ pctrl.skype }}</dd>
+            </dl>
+        </div>
+
+        <form data-ng-submit="" class="pmbb-edit" data-ng-if="ctrl.editSkus === 1">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Mobile Phone</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="pctrl.mobileNumber" type="text" class="form-control" placeholder="eg. 00971 12345678 9">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Email Address</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="pctrl.emailAddress" type="email" class="form-control" placeholder="eg. malinda.h@gmail.com">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Twitter</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="pctrl.twitter" type="text" class="form-control" placeholder="eg. @malinda">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Skype</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input data-ng-model="pctrl.skype" type="text" class="form-control" placeholder="eg. malinda.hollaway">
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit" data-ng-click="ctrl.editSkus = 0">Save</button>
+                <button class="btn btn-link btn-sm" data-ng-click="ctrl.editSkus = 0" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

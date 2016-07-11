@@ -42,6 +42,8 @@ materialAdmin
         //
 
 
+    })
+    .controller("productAdditionBasic", function ($scope) {
         $scope.addSku = function () {
             var name = $scope.skuNameInput;
             $scope.product.skus.push({
@@ -79,8 +81,7 @@ materialAdmin
         $scope.deleteStepScope = function (index) {
             $scope.product.stepScopes.splice(index, 1);
         }
-    })
-    .controller("productAdditionBasic", function ($scope) {
+
         $scope.$watch("radioModel", function (val) {
             if (val === "ticket") {
                 $scope.specifics.viewType = "ss";
@@ -198,4 +199,31 @@ materialAdmin
     })
     .controller('productQueryCtrl', function($scope) {
 
+    })
+    .controller('productInfoCtrl', function($scope, $stateParams) {
+        console.log($stateParams.id);
+        $scope.ctrl = {
+            editDescription: 0,
+            editBasicInfo: 0,
+            editSkus: 0
+        };
+
+        $scope.product = {
+            name: "产品1",
+            desc: "产品1描述",
+            skus: [],
+            priceType: "fixedUnitPrice",
+            pricing: [],
+            stepScopes: [],
+            specifics: [{
+                itemName: "汽车类型",
+                value: "Toyota",
+                editable: true
+            },{
+                itemName: "供应商",
+                value: "Supplier1",
+                editable: false
+            }],
+            type: "汽车租赁"
+        }
     })

@@ -242,6 +242,31 @@ materialAdmin
                 templateUrl: 'views/product-query.html'
             })
 
+            .state ('product.info', {
+                url: '/{id}',
+                templateUrl:'views/product-info.html'
+            })
+
+            .state ('product.info.basic', {
+                url: '/basic',
+                templateUrl:'views/product-info-basic.html'
+            })
+
+            .state ('product.info.price', {
+                url: '/price',
+                templateUrl:'views/product-info-price.html'
+            })
+
+            .state ('product.info.photos', {
+                url: '/photos',
+                templateUrl:'views/product-info-photos.html'
+            })
+
+            .state ('product.info.additions', {
+                url: '/additions',
+                templateUrl:'views/product-info-additions.html'
+            })
+
             .state ('form.form-examples.price-table', {
                 url: '/price-table',
                 templateUrl: 'views/price-table.html'

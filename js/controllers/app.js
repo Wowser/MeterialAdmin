@@ -3,7 +3,29 @@ materialAdmin
         $scope.product = {
             name: "",
             desc: "",
-            skus: []
+            skus: [],
+            priceType: "fixedUnitPrice",
+            pricing: [],
+            stepScopes: [],
+            specifics: {
+                carRent: {
+                    carType: "",
+                    supplier: ""
+                },
+                ticket: {
+                    viewDestination: "",
+                    viewType: "",
+                },
+                travel: {
+                    agency: "",
+                    travelType: ""
+                },
+                additonal: {
+                    addtionServiceSupplier: "",
+                    addtionServiceType: ""
+                }
+            },
+            type: ""
         }
 
         //Mock
@@ -13,17 +35,12 @@ materialAdmin
             values: ["v1", "v2", "v3", "v4", "v5"]
         }
 
-        $scope.product.skus[1] = {
-            name: "sku2",
-            determinPrice: true,
-            values: ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"]
-        }
+        //$scope.product.skus[1] = {
+        //    name: "sku2",
+        //    determinPrice: true,
+        //    values: ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"]
+        //
 
-        $scope.product.skus[2] = {
-            name: "sku2",
-            determinPrice: true,
-            values: ["k1", "k2", "k3", "k4", "k5", "k6", "k7"]
-        }
 
         $scope.addSku = function () {
             var name = $scope.skuNameInput;
@@ -45,17 +62,14 @@ materialAdmin
             });
             $scope.skuNameInput = '';
         }
-
-        $scope.stepScopes = [];
-
         $scope.addStepScope = function () {
             var start = 0;
             var end = 0;
-            if ($scope.stepScopes.length !== 0) {
-                start = $scope.stepScopes[$scope.stepScopes.length - 1].end + 1;
+            if ($scope.product.stepScopes.length !== 0) {
+                start = $scope.product.stepScopes[$scope.product.stepScopes.length - 1].end + 1;
                 end = start;
             }
-            $scope.stepScopes.push({
+            $scope.product.stepScopes.push({
                 start: start,
                 end: end
             })
@@ -63,37 +77,17 @@ materialAdmin
 
 
         $scope.deleteStepScope = function (index) {
-            $scope.stepScopes.splice(index, 1);
+            $scope.product.stepScopes.splice(index, 1);
         }
-
-        $scope.nextStep = function (stepIndex) {
-            if (stepIndex < $scope.maxStep) {
-                $scope.stepIndex++;
-                showPreloader();
+    })
+    .controller("productAdditionBasic", function ($scope) {
+        $scope.$watch("radioModel", function (val) {
+            if (val === "ticket") {
+                $scope.specifics.viewType = "ss";
             }
-        }
-
-        function showPreloader() {
-            $scope.preLoaderShow = true;
-        }
-
-        function hiedePreloader() {
-            $scope.preLoaderShow = false;
-        }
-
-        $scope.preStep = function (stepIndex) {
-            if (stepIndex > 1) {
-                $scope.stepIndex--;
-                showPreloader();
-            }
-        }
-
-        var initStep1 = function () {
-            hiedePreloader();
-        }
-
-        $scope.skuCombination = [];
-
+        })
+    })
+    .controller("setPriceTableCtrl", function ($scope, $timeout, ngTableParams, productService) {
         function combineSku(source, level, combine) {
             if (level === source.length) {
                 return;
@@ -116,32 +110,92 @@ materialAdmin
             }
         }
 
-        var initStep2 = function () {
-            var combine = [];
-            var total = 1;
-            var skus = [];
-            for (var i = 0; i < $scope.product.skus.length; i++) {
-                var sku = $scope.product.skus[i];
-                if (sku.determinPrice) {
-                    total *= sku.values.length;
-                    skus.push(sku);
-                }
+        function formatCombinSku() {
+            var res = [];
+            for (var i in $scope.product.stepScopes) {
+                res.push({
+                    cny: 0,
+                    thb: 0,
+                    usd: 0
+                });
             }
-            combine.length = total;
-            combineSku(skus, 0, combine);
-            $scope.skuCombination = combine;
-            hiedePreloader();
-
+            if (res.length == 0) {
+                res.push({
+                    cny: 0,
+                    thb: 0,
+                    usd: 0
+                });
+            }
+            return res;
         }
 
 
-        var initStep3 = function () {
-            hiedePreloader();
+        var combine = [];
+        var total = 1;
+        var skus = [];
+        for (var i = 0; i < $scope.product.skus.length; i++) {
+            var sku = $scope.product.skus[i];
+            if (sku.determinPrice) {
+                total *= sku.values.length;
+                skus.push(sku);
+            }
         }
+        combine.length = total;
+        combineSku(skus, 0, combine);
+        $scope.product.pricing.length = 0;
+        angular.forEach(combine, function (data, index) {
+            var d = {
+                name: data,
+                price: formatCombinSku()
+            };
 
-        var stepInits = [initStep1, initStep2, initStep3]
+            d.pricingTable = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: d.price.length, // length of data
+                counts: [],
+                getData: function ($defer, params) {
+                    $defer.resolve(d.price.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
 
-        $scope.$watch("stepIndex", function (value) {
-            stepInits[value - 1]();
+            $scope.product.pricing.push(d);
         });
-    });
+
+        $scope.submit = function () {
+            var pricing = [];
+            for (var i in $scope.product.pricing) {
+                pricing.push({
+                    name: $scope.product.pricing[i].name,
+                    price: $scope.product.pricing[i].price
+                })
+            }
+
+            var specifics = [];
+            for (var key in $scope.product.specifics[$scope.product.type]) {
+                specifics.push({
+                    itemName: key,
+                    value: $scope.product.specifics[$scope.product.type][key]
+                })
+            }
+
+            var data = {
+                name: $scope.product.name,
+                desc: $scope.product.desc,
+                skus: $scope.product.skus,
+                type: $scope.product.type,
+                priceType: $scope.product.priceType,
+                pricing: pricing,
+                stepScopes: $scope.product.stepScopes,
+                specifics: specifics
+            }
+            productService.add(data);
+        }
+    })
+    .controller("submitProductAddtion", function ($scope, $timeout, productService) {
+
+    })
+    .controller('productQueryCtrl', function($scope) {
+
+    })

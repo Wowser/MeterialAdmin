@@ -1,0 +1,348 @@
+<div data-ng-controller="productAdditionBasic">
+    <div class="card">
+        <div class="card-header">
+            <h2>基本信息
+                <small></small>
+            </h2>
+        </div>
+
+        <div class="card-body card-padding">
+            <form role="form">
+                <div class="form-group fg-line">
+                    <label for="productName">产品名称</label>
+                    <input type="text" class="form-control input-sm" id="productName" data-ng-model="product.name"
+                           placeholder="输入产品名称">
+                </div>
+                <div class="form-group">
+                    <label for="productDesc">产品描述</label>
+                    <div class="fg-line">
+                        <textarea class="form-control" rows="5" id="productDesc"
+                                  placeholder="产品描述...." data-ng-model="product.desc"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>类别
+                <small>
+                </small>
+            </h2>
+        </div>
+
+        <div class="card-body card-padding">
+            <form role="form">
+                <div class="btn-group m-b-10" ng-init="product.type='carRent'">
+                    <label class="btn btn-primary" ng-model="product.type" uib-btn-radio="'carRent'">汽车租赁</label>
+                    <label class="btn btn-primary" ng-model="product.type" uib-btn-radio="'ticket'">门票</label>
+                    <label class="btn btn-primary" ng-model="product.type" uib-btn-radio="'travel'">短行程</label>
+                    <label class="btn btn-primary" ng-model="product.type" uib-btn-radio="'additonal'">附加服务</label>
+                </div>
+                <div class="tab-content" data-ng-class="{disabled: product.type !== 'carRent'}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <label for="carType">车型</label>
+                                <input type="text" class="form-control input-sm" id="carType"
+                                       data-ng-model="product.specifics.carRent.carType"
+                                       placeholder="输入车型">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="supplier_select">供应商</label>
+                            <select chosen data-placeholder="Select a country..." class="w-100"
+                                    data-ng-model="product.specifics.carRent.supplier"
+                                    id="supplier_select">
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Aland Islands">Aland Islands</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="American Samoa">American Samoa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content " data-ng-class="{disabled: product.type !== 'ticket'}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <label for="viewDestination">地点</label>
+                                <input type="text" class="form-control input-sm" id="viewDestination"
+                                       data-ng-model="product.specifics.ticket.viewDestination"
+                                       placeholder="输入地点">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="viewType">类型</label>
+                            <select chosen data-placeholder="Select a country..." class="w-100"
+                                    data-ng-model="product.specifics.ticket.viewType"
+                                    id="viewType">
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Aland Islands">Aland Islands</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="American Samoa">American Samoa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content " data-ng-class="{disabled: product.type !== 'travel'}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <label for="viewDestination">旅行社</label>
+                                <input type="text" class="form-control input-sm" id="travelAgency"
+                                       data-ng-model="product.specifics.travel.agency"
+                                       placeholder="输入旅行社名称">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="travelType">类型</label>
+                            <select chosen data-placeholder="Select a country..." class="w-100"
+                                    data-ng-model="product.specifics.travel.travelType"
+                                    id="travelType">
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                                <option value="Aland Islands">Aland Islands</option>
+                                <option value="Albania">Albania</option>
+                                <option value="Algeria">Algeria</option>
+                                <option value="American Samoa">American Samoa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content " data-ng-class="{disabled: product.type !== 'additonal'}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group fg-line">
+                                <label for="viewDestination">供应商</label>
+                                <input type="text" class="form-control input-sm" id="addtionServiceSupplier"
+                                       data-ng-model="product.specifics.additonal.addtionServiceSupplier"
+                                       placeholder="输入供应商名称">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="addtionServiceType">类型</label>
+                            <select chosen data-placeholder="Select a country..." class="w-100"
+                                    data-ng-model="product.specifics.additonal.addtionServiceType"
+                                    id="addtionServiceType">
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Afghanistan">Afghanistan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>SKU
+                <small></small>
+            </h2>
+        </div>
+        <div class="listview lv-bordered lv-lg">
+            <div class="lv-header-alt clearfix">
+                <h2 class="lvh-label hidden-xs">新增SKU</h2>
+
+                <div class="lvh-add" data-ng-class="{disabled: !mactrl.listviewSearchStat}">
+                    <input type="text" placeholder="SKU名称" class="lvhs-input" data-ng-model="skuNameInput"
+                           data-ng-init="skuNameInput=''">
+                    <i class="lvh-search-close" style="right: 52px;"
+                       data-ng-click="mactrl.listviewSearchStat = false;addSku()">&plus;</i>
+                    <i class="lvh-search-close"
+                       data-ng-click="mactrl.listviewSearchStat = false;skuNameInput=''">&times;</i>
+                </div>
+
+                <ul class="lv-actions actions">
+                    <li>
+                        <a href="" data-ng-click="mactrl.listviewSearchStat = true">
+                            <i class="zmdi zmdi-plus"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" uib-dropdown>
+                        <a href="" uib-dropdown-toggle aria-expanded="true">
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Refresh</a>
+                            </li>
+                            <li>
+                                <a href="">Listview Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="lv-body">
+                <div class="lv-item media" ng-repeat="sku in product.skus">
+                    <div class="media-body">
+                        <div class="lv-title">{{sku.name}}
+                        </div>
+                        <div class="row" ng-class="{disabled: !editMode}">
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-small m-t-5" ng-model="sku.newValue"
+                                       placeholder="Sku取值">
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-primary btn-sm waves-effect m-t-10"
+                                        data-ng-click="sku.add()">
+                                    add
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="lv-attrs">
+                            <li ng-repeat="value in sku.values">{{value}}
+                                <button type="button" class="close" ng-click="sku.deleteAttr($index)"
+                                        data-ng-class="{disabled: !editMode}">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="lv-actions actions dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li data-ng-show="!editMode">
+                                    <a href="" data-ng-click="editMode = true;">Edit</a>
+                                </li>
+                                <li data-ng-show="editMode">
+                                    <a href="" data-ng-click="editMode = false;">Save</a>
+                                </li>
+                                <li>
+                                    <a href="" data-ng-click="sku.delete()">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>定价SKU</h2>
+        </div>
+        <div class="card-body card-padding">
+            <label class="checkbox checkbox-inline m-r-20" data-ng-repeat="sku in product.skus">
+                <input type="checkbox" value="sku.name" ng-model="sku.determinPrice">
+                <i class="input-helper"></i>
+                {{sku.name}}
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2>定价方式</h2>
+        </div>
+        <div class="card-body card-padding">
+            <div class="m-b-10">
+                <label class="radio radio-inline m-r-20">
+                    <input type="radio" name="fixedUnitPriceRadioOptions" ng-model="product.priceType"
+                           value="fixedUnitPrice">
+                    <i class="input-helper"></i>
+                    固定单价
+                </label>
+                <label class="radio radio-inline m-r-20">
+                    <input type="radio" name="fixedTotalPriceRadioOptions" ng-model="product.priceType"
+                           value="fixedTotalPrice">
+                    <i class="input-helper"></i>
+                    固定总价
+                </label>
+                <label class="radio radio-inline m-r-20">
+                    <input type="radio" name="stepUnitPriceRadioOptions" ng-model="product.priceType"
+                           value="stepUnitPrice">
+                    <i class="input-helper"></i>
+                    阶梯单价
+                </label>
+                <label class="radio radio-inline m-r-20">
+                    <input type="radio" name="mixedStepPriceRadioOptions" ng-model="product.priceType"
+                           value="mixedStepPrice">
+                    <i class="input-helper"></i>
+                    混合阶梯定价
+                </label>
+            </div>
+        </div>
+        <div class="listview lv-bordered lv-lg"
+             data-ng-class="{disabled: product.priceType !== 'stepUnitPrice' &&  product.priceType !== 'mixedStepPrice'}">
+            <div class="lv-header-alt clearfix">
+                <h2 class="lvh-label hidden-xs">新增阶梯</h2>
+
+                <ul class="lv-actions actions">
+                    <li>
+                        <a href="" data-ng-click="addStepScope();">
+                            <i class="zmdi zmdi-plus"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown" uib-dropdown>
+                        <a href="" uib-dropdown-toggle aria-expanded="true">
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Refresh</a>
+                            </li>
+                            <li>
+                                <a href="">Listview Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="lv-body" ng-repeat="stepScope in product.stepScopes">
+                <div class="lv-item media">
+                    <div class="media-body">
+                        <div class="lv-title">阶梯{{$index + 1}}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <input type="number" min="0" class="form-control input-small m-t-5"
+                                       ng-model="stepScope.start">
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="number" min="0" class="form-control input-small m-t-5"
+                                       ng-model="stepScope.end">
+                            </div>
+                        </div>
+
+                        <div class="lv-actions actions dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="" data-ng-click="deleteStepScope($index)">Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ui-sref="product.addition.price">生成定价表格
+    </a>
+</div>

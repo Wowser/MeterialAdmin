@@ -1,0 +1,64 @@
+<div data-ng-controller="setPriceTableCtrl">
+    <div class="card">
+        <div class="card-header">
+            <h2>定价
+                <small></small>
+            </h2>
+        </div>
+        <div class="listview lv-bordered lv-lg">
+            <div class="lv-header-alt clearfix">
+                <h2 class="lvh-label hidden-xs">定价表</h2>
+            </div>
+
+            <div class="lv-body">
+                <div class="lv-item media" ng-repeat="price in product.pricing">
+                    <div class="media-body">
+                        <div class="lv-title">
+                            <span ng-repeat="val in price.name">{{val}} </span>
+                        </div>
+                        <div>
+                            <div class="table-responsive">
+                                <table ng-table="price.pricingTable" class="table table-striped table-vmiddle"
+                                       ng-init="onFinishedReander($last)">
+                                    <tr ng-repeat="w in $data" ng-class="{ 'active': w.$edit }">
+                                        <td data-title="'Scope'">
+                                            <span>{{(product.priceType == 'stepUnitPrice' || product.priceType == 'mixedStepPrice')?product.stepScopes[$index].start + "~" + product.stepScopes[$index].end:"All" }}</span>
+                                        </td>
+                                        <td data-title="'CNY'">
+                                            <span ng-if="!w.$edit">{{ w.cny }}</span>
+                                            <div ng-if="w.$edit"><input class="form-control" type="number"
+                                                                        ng-model="w.cny"/></div>
+                                        </td>
+                                        <td data-title="'THB'">
+                                            <span ng-if="!w.$edit">{{ w.thb }}</span>
+                                            <div ng-if="w.$edit"><input class="form-control" type="number"
+                                                                        ng-model="w.thb"/></div>
+                                        </td>
+                                        <td data-title="'USD'">
+                                            <span ng-if="!w.$edit">{{ w.usd }}</span>
+                                            <div ng-if="w.$edit"><input class="form-control" type="number"
+                                                                        ng-model="w.usd"/></div>
+                                        </td>
+                                        <td data-title="'Actions'">
+                                            <button type="button" class="btn btn-default" ng-if="!w.$edit"
+                                                    ng-click="w.$edit = true"><i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success" ng-if="w.$edit"
+                                                    ng-click="w.$edit = false"><i class="zmdi zmdi-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ng-click="submit()">提交
+    </a>
+    <a class="btn btn-primary waves-effect m-r-10 pull-right" type="button" data-ui-sref="product.addition.basic">上一步
+    </a>
+</div>

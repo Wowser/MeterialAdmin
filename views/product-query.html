@@ -1,0 +1,99 @@
+<div class="container" data-ng-controller="productQueryCtrl">
+    <div class="block-header">
+        <h2>产品查询</h2>
+    </div>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label hidden-xs">19,453 Records</h2>
+
+            <div class="lvh-search" data-ng-class="{disabled: !mactrl.listviewSearchStat}">
+                <input type="text" placeholder="Start typing..." class="lvhs-input">
+
+                <i class="lvh-search-close" data-ng-click="mactrl.listviewSearchStat = false">&times;</i>
+            </div>
+
+            <ul class="lv-actions actions">
+                <li>
+                    <a href="" data-ng-click="mactrl.listviewSearchStat = true">
+                        <i class="zmdi zmdi-search"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="zmdi zmdi-time"></i>
+                    </a>
+                </li>
+                <li class="dropdown" uib-dropdown>
+                    <a href="" uib-dropdown-toggle aria-expanded="false" aria-haspopup="true">
+                        <i class="zmdi zmdi-sort"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a href="">Last Modified</a>
+                        </li>
+                        <li>
+                            <a href="">Last Edited</a>
+                        </li>
+                        <li>
+                            <a href="">Name</a>
+                        </li>
+                        <li>
+                            <a href="">Date</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="zmdi zmdi-info"></i>
+                    </a>
+                </li>
+                <li class="dropdown" uib-dropdown>
+                    <a href="" uib-dropdown-toggle aria-expanded="false" aria-haspopup="true">
+                        <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a href="">Refresh</a>
+                        </li>
+                        <li>
+                            <a href="">Settings</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="card-body card-padding">
+
+            <div class="contacts clearfix row">
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <div class="c-item">
+                        <a href="" class="ci-avatar">
+                            <img src="img/profile-menu.png" alt="">
+                        </a>
+
+                        <div class="c-info">
+                            <strong>Cathy Shelton</strong>
+                            <small>cathy.shelton31@example.com</small>
+                        </div>
+
+                        <div class="c-footer">
+                            <button class="waves-effect"><i class="zmdi zmdi-person-add"></i> 查看</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="load-more">
+                <a href=""><i class="zmdi zmdi-refresh-alt"></i> Load More...</a>
+            </div>
+        </div>
+    </div>
+    <div ui-view>
+
+    </div>
+</div>

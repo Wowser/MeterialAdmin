@@ -1,13 +1,13 @@
 materialAdmin
 
-    // =========================================================================
-    // Header Messages and Notifications list Data
-    // =========================================================================
+// =========================================================================
+// Header Messages and Notifications list Data
+// =========================================================================
 
-    .service('messageService', ['$resource', function($resource){
-        this.getMessage = function(img, user, text) {
+    .service('messageService', ['$resource', function ($resource) {
+        this.getMessage = function (img, user, text) {
             var gmList = $resource("data/messages-notifications.json");
-            
+
             return gmList.get({
                 img: img,
                 user: user,
@@ -15,16 +15,16 @@ materialAdmin
             });
         }
     }])
-    
+
 
     // =========================================================================
     // Best Selling Widget Data (Home Page)
     // =========================================================================
 
-    .service('bestsellingService', ['$resource', function($resource){
-        this.getBestselling = function(img, name, range) {
+    .service('bestsellingService', ['$resource', function ($resource) {
+        this.getBestselling = function (img, name, range) {
             var gbList = $resource("data/best-selling.json");
-            
+
             return gbList.get({
                 img: img,
                 name: name,
@@ -33,15 +33,15 @@ materialAdmin
         }
     }])
 
-    
+
     // =========================================================================
     // Todo List Widget Data
     // =========================================================================
 
-    .service('todoService', ['$resource', function($resource){
-        this.getTodo = function(todo) {
+    .service('todoService', ['$resource', function ($resource) {
+        this.getTodo = function (todo) {
             var todoList = $resource("data/todo.json");
-            
+
             return todoList.get({
                 todo: todo
             });
@@ -52,12 +52,12 @@ materialAdmin
     // =========================================================================
     // Recent Items Widget Data
     // =========================================================================
-    
-    .service('recentitemService', ['$resource', function($resource){
-        this.getRecentitem = function(id, name, price) {
+
+    .service('recentitemService', ['$resource', function ($resource) {
+        this.getRecentitem = function (id, name, price) {
             var recentitemList = $resource("data/recent-items.json");
-            
-            return recentitemList.get ({
+
+            return recentitemList.get({
                 id: id,
                 name: name,
                 price: price
@@ -69,24 +69,24 @@ materialAdmin
     // =========================================================================
     // Recent Posts Widget Data
     // =========================================================================
-    
-    .service('recentpostService', ['$resource', function($resource){
-        this.getRecentpost = function(img, user, text) {
+
+    .service('recentpostService', ['$resource', function ($resource) {
+        this.getRecentpost = function (img, user, text) {
             var recentpostList = $resource("data/messages-notifications.json");
-            
-            return recentpostList.get ({
+
+            return recentpostList.get({
                 img: img,
                 user: user,
                 text: text
             })
         }
     }])
-    
+
     // =========================================================================
     // Data Table
     // =========================================================================
-    
-    .service('tableService', [function(){
+
+    .service('tableService', [function () {
         this.data = [
             {
                 "id": 10238,
@@ -95,7 +95,7 @@ materialAdmin
                 "username": "MarcBarnes",
                 "contact": "(382)-122-5003"
             },
-            {   
+            {
                 "id": 10243,
                 "name": "Glen Curtis",
                 "email": "glen.curtis11@example.com",
@@ -122,7 +122,7 @@ materialAdmin
                 "email": "melinda@example.com",
                 "username": "MelindaMitchelle",
                 "contact": "(813)-716-4996"
-                
+
             },
             {
                 "id": 10239,
@@ -236,13 +236,13 @@ materialAdmin
     // =========================================================================
     // Malihu Scroll - Custom Scroll bars
     // =========================================================================
-    .service('scrollService', function() {
+    .service('scrollService', function () {
         var ss = {};
         ss.malihuScroll = function scrollBar(selector, theme, mousewheelaxis) {
             $(selector).mCustomScrollbar({
                 theme: theme,
                 scrollInertia: 100,
-                axis:'yx',
+                axis: 'yx',
                 mouseWheel: {
                     enable: true,
                     axis: mousewheelaxis,
@@ -250,7 +250,7 @@ materialAdmin
                 }
             });
         }
-        
+
         return ss;
     })
 
@@ -259,12 +259,12 @@ materialAdmin
     // BOOTSTRAP GROWL
     //==============================================
 
-    .service('growlService', function(){
+    .service('growlService', function () {
         var gs = {};
-        gs.growl = function(message, type) {
+        gs.growl = function (message, type) {
             $.growl({
                 message: message
-            },{
+            }, {
                 type: type,
                 allow_dismiss: false,
                 label: 'Cancel',
@@ -275,8 +275,8 @@ materialAdmin
                 },
                 delay: 2500,
                 animate: {
-                        enter: 'animated bounceIn',
-                        exit: 'animated bounceOut'
+                    enter: 'animated bounceIn',
+                    exit: 'animated bounceOut'
                 },
                 offset: {
                     x: 20,
@@ -284,6 +284,25 @@ materialAdmin
                 }
             });
         }
-        
+
         return gs;
+    })
+    .service('productService', function ($http) {
+        return {
+            add: function (options) {
+                return $http({
+                    method: 'POST',
+                    url: 'product',
+                    data: {
+                        name: options.name,
+                        desc: options.desc,
+                        skus: options.skus,
+                        priceType: options.priceType,
+                        pricing: options.pricing,
+                        stepScopes: options.stepScopes,
+                        specifics: options.specifics
+                    }
+                });
+            }
+        }
     })

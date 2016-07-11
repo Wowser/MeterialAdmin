@@ -2,6 +2,8 @@ materialAdmin
     .config(function ($stateProvider, $urlRouterProvider){
         $urlRouterProvider.otherwise("/home");
 
+        $urlRouterProvider.when('/product', '/product/addition/basic');
+        $urlRouterProvider.when('/product/addition', '/product/addition/basic');
 
         $stateProvider
         
@@ -190,10 +192,13 @@ materialAdmin
                     }
                 }
             })
-        
-            .state ('form.form-examples', {
-                url: '/form-examples',
-                templateUrl: 'views/form-examples.html',
+            .state ('product', {
+                url: '/product',
+                templateUrl: 'views/common.html'
+            })
+            .state ('product.addition', {
+                url: '/addition',
+                templateUrl: 'views/product-addition.html',
                 resolve: {
                     loadPlugin: function($ocLazyLoad) {
                         return $ocLazyLoad.load ([
@@ -216,11 +221,38 @@ materialAdmin
                     }
                 }
             })
+
+            .state ('product.addition.basic', {
+                url: '/basic',
+                templateUrl: 'views/product-addition-basic.html'
+            })
+
+            .state ('product.addition.submit', {
+                url: '/submit',
+                templateUrl: 'views/submitProduct.html'
+            })
+
+            .state ('product.addition.price', {
+                url: '/price',
+                templateUrl: 'views/product-addition-price.html'
+            })
+
+            .state ('product.query', {
+                url: '/query',
+                templateUrl: 'views/product-query.html'
+            })
+
+            .state ('form.form-examples.price-table', {
+                url: '/price-table',
+                templateUrl: 'views/price-table.html'
+            })
         
             .state ('form.form-validations', {
                 url: '/form-validations',
                 templateUrl: 'views/form-validations.html'
             })
+
+
         
             
             //------------------------------

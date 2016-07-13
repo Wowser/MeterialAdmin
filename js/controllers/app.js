@@ -197,10 +197,10 @@ materialAdmin
     .controller("submitProductAddtion", function ($scope, $timeout, productService) {
 
     })
-    .controller('productQueryCtrl', function($scope) {
+    .controller('productQueryCtrl', function ($scope) {
 
     })
-    .controller('productInfoCtrl', function($scope, $stateParams) {
+    .controller('productInfoCtrl', function ($scope, $stateParams, ngTableParams) {
         console.log($stateParams.id);
         $scope.ctrl = {
             editDescription: 0,
@@ -213,17 +213,42 @@ materialAdmin
             desc: "产品1描述",
             skus: [],
             priceType: "fixedUnitPrice",
-            pricing: [],
+            pricing: [{"name": ["v1"], "price": [{"cny": 0, "thb": 0, "usd": 0}]}, {
+                "name": ["v2"],
+                "price": [{"cny": 0, "thb": 0, "usd": 0}]
+            }, {"name": ["v3"], "price": [{"cny": 0, "thb": 0, "usd": 0}]}, {
+                "name": ["v4"],
+                "price": [{"cny": 0, "thb": 0, "usd": 0}]
+            }, {"name": ["v5"], "price": [{"cny": 0, "thb": 0, "usd": 0}]}],
             stepScopes: [],
             specifics: [{
                 itemName: "汽车类型",
                 value: "Toyota",
                 editable: true
-            },{
+            }, {
                 itemName: "供应商",
                 value: "Supplier1",
                 editable: false
             }],
             type: "汽车租赁"
+        }
+
+        angular.forEach($scope.product.pricing, function (d) {
+            d.pricingTable = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: d.price.length, // length of data
+                counts: [],
+                getData: function ($defer, params) {
+                    $defer.resolve(d.price.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+        });
+
+        $scope.product.skus[0] = {
+            name: "sku1",
+            determinPrice: true,
+            values: ["v1", "v2", "v3", "v4", "v5"]
         }
     })
